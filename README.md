@@ -51,3 +51,72 @@
 🌂 `0 - MÁXIMO DE UM`
 
 🌂 `1 - MAIS DE UM`
+
+<h2 align="center">CTE</h2>
+
+<h3 align="center">TABELA PARA REALIZAR A CONSULTA</h3>
+
+  ```
+    CREATE TABLE tree (
+      id serial PRIMARY KEY,
+      parent_id INT NOT NULL,
+      child_id INT NOT NULL,
+      created_At TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp
+    );
+  ```
+
+  ```
+    ----------------------------------------------------------------------------------------------------------------
+    --                                                                                                            --
+    --                                            (1)                                                             --
+    --                                             -                                                              --
+    --                      -------------------------------------------------------------------------------       --
+    --                      -                                         -                                   -       --
+    --                     (2)                                       (3)                                  -       --
+    --                      -                                         -                                   -       --
+    --             ------------------                                 ---------                           -       --
+    --             -                -                                         -                           -       --
+    --            (4)              (5)                                       (6)                          -       --
+    --             -                                                          -                           -       --
+    --     ---------                                            -----------------------------             -       --
+    --     -                                                    -            -               -            -       --
+    --   (11)                                                  (7)          (8)             (9)          (10)     --
+    --                                                                                                            --
+    ----------------------------------------------------------------------------------------------------------------
+  ```
+
+  ```sql
+    INSERT INTO tree (parent_id, child_id, created_at) VALUES (1, 2, now());
+    INSERT INTO tree (parent_id, child_id, created_at) VALUES (2, 4, now());
+    INSERT INTO tree (parent_id, child_id, created_at) VALUES (2, 5, now());
+    INSERT INTO tree (parent_id, child_id, created_at) VALUES (3, 6, now());
+    INSERT INTO tree (parent_id, child_id, created_at) VALUES (6, 7, now());
+    INSERT INTO tree (parent_id, child_id, created_at) VALUES (6, 8, now());
+    INSERT INTO tree (parent_id, child_id, created_at) VALUES (6, 9, now());
+    INSERT INTO tree (parent_id, child_id, created_at) VALUES (1, 10, now());
+    INSERT INTO tree (parent_id, child_id, created_at) VALUES (4, 11, now());
+  ```
+
+  ```sql
+    WITH RECURSIVE like_tree AS (
+    SELECT
+        id,
+        child_id,
+        parent_id
+    FROM
+        tree
+    WHERE
+        ( parent_id = 4 OR parent_id IN ( SELECT parent_id FROM tree WHERE child_id = 4 ) ) -- TENTAR ARRUMAR AQUI, RETORNANDO TODOS OS PARENTS
+    UNION
+        SELECT
+          t.id,
+          t.child_id,
+          t.parent_id
+        FROM
+          tree t
+        INNER JOIN like_tree lt ON lt.child_id = t.parent_id
+    ) SELECT
+        *
+      FROM
+        like_tree;
+  ```
