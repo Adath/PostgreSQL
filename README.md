@@ -54,14 +54,14 @@
 
 <h2 align="center">CTE</h2>
 
-<h3 align="center">TABELA PARA REALIZAR A CONSULTA</h3>
+<h3 align="center">Table creation</h3>
 
 ```
   CREATE TABLE tree (
     id serial PRIMARY KEY,
     parent_id INT NOT NULL,
     child_id INT NOT NULL,
-    created_At TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp
+    created_At TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
 ```
 
