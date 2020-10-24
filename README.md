@@ -6,15 +6,15 @@
 
 <h3 align="center">References</h3>
 
-<span>👹</span> <a href="https://www.w3schools.com">https://www.w3schools.com</a>
+<span>👹</span> <a href="https://www.w3schools.com">w3schools</a>
 
 <span>👹</span> <a href="https://www.postgresqltutorial.com">https://www.postgresqltutorial.com</a>
 
-<span>👹</span> <a href="https://www.edivaldobrito.com.br/pgadmin4-no-ubuntu">https://www.edivaldobrito.com.br/pgadmin4-no-ubuntu</a>
+<span>👹</span> <a href="https://www.edivaldobrito.com.br/pgadmin4-no-ubuntu">Como instalar o pgAdmin4 no Ubuntu e derivados</a>
 
-<span>👹</span> <a href="https://www.edivaldobrito.com.br/postgresql-no-debian">https://www.edivaldobrito.com.br/postgresql-no-debian</a>
+<span>👹</span> <a href="https://www.edivaldobrito.com.br/postgresql-no-debian">Como instalar o mais recente SGBD PostgreSQL no Debian e derivados</a>
 
-<span>👹</span> <a href="https://www.tutorialspoint.com/postgresql/postgresql_c_cpp.htm">https://www.tutorialspoint.com/postgresql/postgresql_c_cpp.htm</a>
+<span>👹</span> <a href="https://www.tutorialspoint.com/postgresql/postgresql_c_cpp.htm">PostgreSQL - C/C++ Interface</a>
 
 <span>🧷</span> <span>`1. DDL (DATA DEFINITION LANGUAGE);`</span>
 
@@ -66,33 +66,33 @@
 ```
 
 ```
-  ----------------------------------------------------------------------------------------------------------------
-  --                                                                                                            --
-  --                                            (1)                                                             --
-  --                                             -                                                              --
-  --                      -------------------------------------------------------------------------------       --
-  --                      -                                         -                                   -       --
-  --                     (2)                                       (3)                                  -       --
-  --                      -                                         -                                   -       --
-  --             ------------------                                 ---------                           -       --
-  --             -                -                                         -                           -       --
-  --            (4)              (5)                                       (6)                          -       --
-  --             -                                                          -                           -       --
-  --     ---------                                            -----------------------------             -       --
-  --     -                                                    -            -               -            -       --
-  --   (11)                                                  (7)          (8)             (9)          (10)     --
-  --                                                                                                            --
-  ----------------------------------------------------------------------------------------------------------------
+  -----------------------------------------------------------------------------------------------------------
+  --                                                                                                       --
+  --                                           (1)                                                         --
+  --                                            -                                                          --
+  --                    ----------------------------------------------------------                         --
+  --                    -                                         -              -                         --
+  --                   (2)                                       (3)             -------                   --
+  --                    -                                         -                     -                  --
+  --            -----------------                                 ---------             ----------         --
+  --            -               -                                         -                      -         --
+  --           (4)             (5)                                       (6)                     ------    --
+  --            -                                                         -                           -    --
+  --    ---------                                           -----------------------------             -    --
+  --    -                                                   -             -             -             -    --
+  --  (11)                                                 (7)           (8)           (9)          (10)   --
+  --                                                                                                       --
+  -----------------------------------------------------------------------------------------------------------
 ```
 
 ```sql
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (1, 2, now());
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (2, 4, now());
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (2, 5, now());
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (3, 6, now());
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (6, 7, now());
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (6, 8, now());
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (6, 9, now());
+  INSERT INTO tree (parent_id, child_id, created_at) VALUES (1,  2, now());
+  INSERT INTO tree (parent_id, child_id, created_at) VALUES (2,  4, now());
+  INSERT INTO tree (parent_id, child_id, created_at) VALUES (2,  5, now());
+  INSERT INTO tree (parent_id, child_id, created_at) VALUES (3,  6, now());
+  INSERT INTO tree (parent_id, child_id, created_at) VALUES (6,  7, now());
+  INSERT INTO tree (parent_id, child_id, created_at) VALUES (6,  8, now());
+  INSERT INTO tree (parent_id, child_id, created_at) VALUES (6,  9, now());
   INSERT INTO tree (parent_id, child_id, created_at) VALUES (1, 10, now());
   INSERT INTO tree (parent_id, child_id, created_at) VALUES (4, 11, now());
 ```
@@ -185,9 +185,9 @@
 
 <h2 align="center">TABLES</h2>
 
-<a href="https://www.postgresqltutorial.com/postgresql-create-table">https://www.postgresqltutorial.com/postgresql-create-table</a>
+<a href="https://www.postgresqltutorial.com/postgresql-create-table">PostgreSQL CREATE TABLE</a>
 
-<a href="https://www.postgresql.org/docs/9.1/static/sql-createtable.html">https://www.postgresql.org/docs/9.1/static/sql-createtable.html</a>
+<a href="https://www.postgresql.org/docs/current/sql-createtable.html">CREATE TABLE</a>
 
 ```sql
   CREATE TABLE logs (
@@ -237,7 +237,7 @@
   ALTER TABLE logs_2017 ADD CONSTRAINT chk_y2016 CHECK (log_ts >= '2011-1-1'::timestamptz AND log_ts < '2016-1-1'::timestamptz );
 ```
 
-<a href="https://www.postgresql.org/docs/9.6/static/tutorial-inheritance.html">3.6. Inheritance</a>
+<a href="https://www.postgresql.org/docs/current/tutorial-inheritance.html">3.6. Inheritance</a>
 
 <h3 align="center">TABELA-UNLOGGED</h3>
 
