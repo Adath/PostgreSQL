@@ -120,3 +120,41 @@
     FROM
       like_tree;
 ```
+
+<h2 align="center">CASE WHEN</h2>
+
+```sql
+  CREATE TABLE colors (
+    id SERIAL PRIMARY KEY,
+    color VARCHAR(32) NOT NULL,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  );
+```
+
+```sql
+  INSERT INTO colors (color) VALUES ('red');
+  INSERT INTO colors (color) VALUES ('green');
+  INSERT INTO colors (color) VALUES ('orange');
+  INSERT INTO colors (color) VALUES ('blue');
+  INSERT INTO colors (color) VALUES ('gray');
+  INSERT INTO colors (color) VALUES ('yellow');
+  INSERT INTO colors (color) VALUES ('white');
+  INSERT INTO colors (color) VALUES ('pink');
+```
+
+```sql
+  SELECT colors.* FROM public.colors;
+```
+
+```sql
+  SELECT
+    colors.color,
+    colors.id,
+    CASE
+      WHEN (colors.id > 0 AND colors.id < 4) THEN 'greater than 0 and less than 4'
+      WHEN (colors.id = 4) THEN 'equal 4'
+      WHEN (colors.id > 4) THEN 'greater than 4'
+    END
+  FROM
+    colors;
+```
