@@ -379,6 +379,121 @@ SELECT pg_terminate_backend(<NUMERO_DO_PROCESSO>);
   SELECT '(2020-01-05, 2020-01-09]'::daterange;
 ```
 
+<h2 align="center">INDEX</h2>
+
+<a href="https://www.devmedia.com.br/trabalhando-com-indices-no-postgresql/34028">Trabalhando com Índices no PostgreSQL</a>
+
+<a href="https://www.citusdata.com/blog/2016/11/04/autovacuum-not-the-enemy">Postgres Autovacuum is Not the Enemy</a>
+
+`YOU CAN HAVE TWO INDEXES OF THE SAME NAME. They just can't be in the same schema.`
+
+`JUST LIKE YOU CAN HAVE TWO TABLES OF THE SAME NAME, but not in the same schema.`
+
+`CHAVES PRIMÁRIAS POSSUEM O ÍNDICE UNIQUE POR PADRÃO`
+
+```sql
+  CREATE TABLE public.user (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(128) UNIQUE NOT NULL,
+    name VARCHAR(128) NOT NULL,
+    email VARCHAR (355) UNIQUE NOT NULL,
+    created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_login TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  );
+```
+
+```sql
+  INSERT INTO public.user (username, name, email) VALUES ('WesleyFloresAccount', 'Wesley Vinicius Flôres Terres', 'wesleyfloresterres@gmail.com');
+```
+
+<h5 align="center">INDEX-B TREE</h5>
+
+```sql
+  CREATE [ UNIQUE ] INDEX [ CONCURRENTLY ] [ INDEX-NAME ] ON <SCHEMA-NAME>.<NOME-TABELA>(NOME-COLUNA)
+```
+
+<h5 align="center">INDEX-HASH</h5>
+
+```sql
+  CREATE [ UNIQUE ] INDEX [ CONCURRENTLY ] [ INDEX-NAME ] ON <SCHEMA-NAME>.<NOME-TABELA> USING HASH(<NOME-COLUNA>);
+```
+
+<h5 align="center">INDEX-CONCURRENTLY</h5>
+
+```sql
+  CREATE INDEX CONCURRENTLY [ INDEX-NAME ] ON <SCHEMA-NAME>.<NOME-TABELA> USING btree(<NOME-COLUNA>);
+```
+
+```sql
+  DROP INDEX [ CONCURRENTLY ][ IF EXISTS ] [ SCHEMA-NAME.INDEX-NAME ] [ CASCADE | RESTRICT ];
+```
+
+<h5 align="center">INDEX-PARTIAL</h5>
+
+```sql
+  CREATE INDEX CONCURRENTLY user_name_idx ON public.user USING btree (name) WHERE last_login >= '2020-03-04';
+```
+
+<h5 align="center">INDEX-BLOAT</h5>
+
+```sql
+  VACUUM public.account;
+```
+
+```sql
+  VACUUM FULL public.account;
+```
+
+```sql
+  CLUSTER public.account USING account_pkey;
+```
+
+```sql
+  REINDEX TABLE account;
+```
+
+<h2 align="center">FUZZY-SEARCH</h2>
+
+<a href="https://en.wikipedia.org/wiki/Approximate_string_matching">Approximate string matching</a>
+
+```sql
+  CREATE EXTENSION pg_trgm;
+```
+
+```sql
+  CREATE TABLE t_location (name TEXT);
+```
+
+```sql
+  COPY t_location FROM PROGRAM 'curl https://web.archive.org/web/20200323144512/https://cybertec-postgresql.com/secret/orte.txt';
+```
+
+<h4 align="center">QUANTO MAIS PRÓXIMO DE ZERO, MAIOR A PROXIMIDADE DAS STRINGS (ZERO SIGNIFICA QUE SÃO IGUAIS)</h4>
+
+```sql
+  SELECT 'abcde' <-> 'abdeacb';
+```
+
+```sql
+  SELECT show_trgm('abcdef');
+```
+
+```sql
+  CREATE INDEX idx_trgm ON t_location USING GiST (name GiST_trgm_ops);
+```
+
+```sql
+  EXPLAIN SELECT t_location.name FROM t_location ORDER BY NAME <-> 'Kramertneusiedel' LIMIT 6;
+```
+
+```sql
+  SELECT * FROM t_location WHERE name ~ '^[H-J]orn$' LIMIT 5;
+```
+
+```sql
+  SELECT * FROM t_location WHERE name ~ '[A-C].*neu.*';
+```
+
 <h2 align="center">Other Topics</h2>
 
 ```sql
