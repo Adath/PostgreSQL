@@ -347,6 +347,37 @@ SELECT pg_terminate_backend(<NUMERO_DO_PROCESSO>);
 ```sql
   INSERT INTO testing (km) VALUES (10);
 ```
+<h3 align="center">ARRAY</h3>
+
+```sql
+  SELECT ARRAY[2001, 2002, 2003] AS yrs;
+```
+
+```sql
+  SELECT '{Alex, Sonia}'::text[] AS name, '{46, 43}'::smallint[] AS age;
+```
+
+```sql
+  SELECT string_to_array('CA.MA.TX', '.') AS states;
+```
+
+```sql
+  SELECT array_agg(f.t) FROM ( VALUES('{Alex, Sônia}'::text[]), ('{46, 43}'::text[]) ) AS f(t);
+```
+
+```sql
+  SELECT unnest('{XX0, X0X, 0XX}'::text[]) as tic_tac_toe;
+```
+
+<h3 align="center">RANGE</h3>
+
+```sql
+  SELECT '[2020-01-05, 2020-01-09]'::daterange;
+```
+
+```sql
+  SELECT '(2020-01-05, 2020-01-09]'::daterange;
+```
 
 <h2 align="center">Other Topics</h2>
 
