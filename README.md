@@ -33,3 +33,21 @@
 <span>📀</span> <span>`SGBD SIGNIFICA SISTEMA DE GERENCIAMENTO DE BANCO DE DADOS.`</span>
 
 <span>📀</span> <span>`CRUD É UMA SIGLA PARA OS TERMOS CREATE, READ, UPDATE AND DELETE.`</span>
+
+<h2 align="center">Cardinalidade</h2>
+
+<a href="https://pt.wikipedia.org/wiki/Normaliza%C3%A7%C3%A3o_de_dados">https://pt.wikipedia.org/wiki/Normaliza%C3%A7%C3%A3o_de_dados</a>
+
+<a href="https://www.luis.blog.br/primeira-forma-normal-1fn-normalizacao-de-dados">https://www.luis.blog.br/primeira-forma-normal-1fn-normalizacao-de-dados</a>
+
+<h3 align="center">Primeiro Algarismo: Obrigatoriedade</h3>
+
+🌂 `0 - NÃO OBRIGATÓRIO`
+
+🌂 `1 - OBRIGATÓRIO`
+
+<h3 align="center">Segundo Algarismo: Cardinalidade</h3>
+
+🌂 `0 - MÁXIMO DE UM`
+
+🌂 `1 - MAIS DE UM`
