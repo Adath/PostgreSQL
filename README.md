@@ -158,3 +158,119 @@
   FROM
     colors;
 ```
+
+<h2 align="center">DATABASE</h2>
+
+```sql
+  CREATE DATABASE <nome_do_banco_de_dados>
+```
+
+<h4 align="center">CRIAÇÃO DE UM BANCO DE DADOS A PARTIR DE UM TEMPLATE</h4>
+
+```sql
+  CREATE DATABASE <nome_do_banco> TEMPLATE <nome_do_banco_template>
+```
+
+<h4 align="center">BANCO TEMPLATE - PROTEGER O BANCO DE DADOS CONTRA ALTERAÇÕES</h4>
+
+```sql
+  UPDATE pg_database SET datistemplate = TRUE WHERE datname = <nome_do_banco>
+```
+
+<h4 align="center">SELECIONAR O BANCO DE DADOS EM QUE ESTAMOS LOGADO</h4>
+
+```sql
+  SELECT current_database();
+```
+
+<h2 align="center">TABLES</h2>
+
+<a href="https://www.postgresqltutorial.com/postgresql-create-table">https://www.postgresqltutorial.com/postgresql-create-table</a>
+
+<a href="https://www.postgresql.org/docs/9.1/static/sql-createtable.html">https://www.postgresql.org/docs/9.1/static/sql-createtable.html</a>
+
+```sql
+  CREATE TABLE logs (
+    id SERIAL PRIMARY KEY,
+    user VARCHAR (64),
+    description text,
+    log_ts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+  );
+```
+
+```sql
+  CREATE TABLE meu_esquema.logs (
+    id serial PRIMARY KEY,
+    user VARCHAR (64),
+    description text,
+    log_ts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+  );
+```
+
+```sql
+  CREATE TABLE public.account(
+    user_id serial PRIMARY KEY,
+    username VARCHAR (64) UNIQUE NOT NULL,
+    password VARCHAR (64) NOT NULL,
+    email VARCHAR (355) UNIQUE NOT NULL,
+    description TEXT NOT NULL, -- Allow empty values (How to prevent this behavior?)
+    created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, -- How prevent to edit this field once the register was created?
+    last_login TIMESTAMP
+  );
+```
+
+```sql
+  INSERT INTO account (username, password, email, description) VALUES ('johndoe', 'secret', 'johndoe@gmail.com', 'example');
+```
+
+```sql
+  SELECT * FROM public.account;
+```
+
+<h3 align="center">TABELA-HERANÇA</h3>
+
+```sql
+  CREATE TABLE logs_2017 (PRIMARY KEY(log_id)) INHERITS (logs0);
+```
+
+```sql
+  ALTER TABLE logs_2017 ADD CONSTRAINT chk_y2016 CHECK (log_ts >= '2011-1-1'::timestamptz AND log_ts < '2016-1-1'::timestamptz );
+```
+
+<a href="https://www.postgresql.org/docs/9.6/static/tutorial-inheritance.html">3.6. Inheritance</a>
+
+<h3 align="center">TABELA-UNLOGGED</h3>
+
+<a href="http://web.archive.org/web/20170724234315/https://www.compose.com/articles/faster-performance-with-unlogged-tables-in-postgresql">Faster Performance with Unlogged Tables in PostgreSQL</a>
+
+```sql
+  CREATE UNLOGGED TABLE sessoes_web (id_sessão text PRIMARY KEY, add_ts timestamptz, upd_ts timestamptz, estado_sessão xml);
+```
+
+<h3 align="center">TABELA-TYPEOF</h3>
+
+```sql
+  CREATE TYPE user_básico AS (user varchar(50), pwd varchar(10));
+```
+
+```sql
+  CREATE TABLE super_user OF user_básico (CONSTRAINT pk_su PRIMARY KEY (user));
+```
+
+```sql
+  ALTER TYPE user_básico ADD ATTRIBUTE telefone varchar(10) CASCADE;
+```
+
+<h3 align="center">TABELA-GENERATED-ALWAYS</h3>
+
+```sql
+  CREATE TABLE testing (
+    id SERIAL PRIMARY KEY,
+    meter INTEGER NOT NULL,
+    km NUMERIC (8, 3) GENERATED ALWAYS AS (meter::INTEGER / 1000::NUMERIC(8, 3)) STORED NOT NULL
+  );
+```
+
+```sql
+  INSERT INTO testing (km) VALUES (10);
+```
