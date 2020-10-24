@@ -52,6 +52,79 @@
 
 🌂 `1 - MAIS DE UM`
 
+<h2 align="center">Commands</h2>
+
+<a href="http://www.postgresqltutorial.com/psql-commands">17 Practical psql Commands That You Don’t Want To Miss</a>
+
+<a href="https://www.postgresql.org/docs/9.1/functions-string.html">9.4. String Functions and Operators</a>
+
+<a href="https://www.gagno.com/14-manipulacoes-com-string-no-postgres">14 manipulações com String no Postgres</a>
+
+<h4 align="center">LISTAR TODOS OS BANCOS DE DADOS PRESENTES</h4>
+
+```sql
+  /list
+```
+
+```sql
+  /l
+```
+
+<h4 align="center">ACESSAR UM BANCO DE DADOS</h4>
+
+```sql
+  \c <nome_do_banco>
+```
+
+<h4 align="center">SAIR DO SERVIDOR</h4>
+
+```sql
+  \q
+```
+<h4 align="center">MOSTRA AJUDA SOBRE TODOS OS COMANDOS</h4>
+
+```sql
+  \h
+```
+
+```sql
+  \h <command>
+```
+
+<h4 align="center">AJUDA GERAL DOS COMANDOS DO PSQL</h4>
+
+```sql
+  \?
+```
+
+<h4 align="center">MOSTRAR VERSÃO ATUAL DO POSTGRES</h4>
+
+```sql
+  SELECT version();
+```
+
+<h4 align="center">DESCREVER UMA TABELA</h4>
+
+```sql
+  \d <schema>.<table>;
+```
+
+<h4 align="center">SELECIONAR TODAS AS CONEXÕES ATIVAS</h4>
+
+```sql
+  SELECT * FROM pg_stat_activity;
+```
+
+<h4 align="center">FINALIZAR UM PROCESSO PELO PID</h4>
+
+```sql
+SELECT pg_terminate_backend(<NUMERO_DO_PROCESSO>);
+```
+
+```sql
+  SELECT pg_terminate_backend(PID) FROM pg_stat_activity WHERE username = "some-role";
+```
+
 <h2 align="center">CTE</h2>
 
 <h3 align="center">Table creation</h3>
@@ -273,4 +346,40 @@
 
 ```sql
   INSERT INTO testing (km) VALUES (10);
+```
+
+<h2 align="center">Other Topics</h2>
+
+```sql
+  CREATE TABLE t_oil (
+    id SERIAL PRIMARY KEY,
+    region VARCHAR(32),
+    country VARCHAR(32),
+    year INT,
+    production INT,
+    consumption INT
+  );
+```
+
+```sql
+  COPY t_oil (region, country, year, production, consumption) FROM PROGRAM 'curl https://www.cybertec-postgresql.com/secret/oil_ext.txt';
+```
+
+```sql
+  SELECT region, avg(production) FROM t_oil GROUP BY region;
+```
+
+```sql
+  SELECT region, avg(production) FROM t_oil GROUP BY ROLLUP (region);
+```
+
+```sql
+  SELECT 
+    region,
+    avg(production),
+    avg(production) FILTER (WHERE year < 1990) AS old,
+    avg(production) FILTER (WHERE year >= 1990) AS new
+  FROM
+    t_oil
+  GROUP BY region;
 ```
