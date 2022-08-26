@@ -1,4 +1,4 @@
-<p align="center"><img height=300 width=300 src="Postgresql_elephant.svg"></p>
+<p align="center"><img height=300 width=300 src="https://raw.githubusercontent.com/MagicalStrangeQuark/MagicalStrangeQuark/master/assets/postgresql.svg"></p>
 
 <h1 align="center">PostgreSQL</h1>
 
@@ -16,15 +16,15 @@
 
 <span>👹</span> <a href="https://www.tutorialspoint.com/postgresql/postgresql_c_cpp.htm">PostgreSQL - C/C++ Interface</a>
 
-<span>🧷</span> <span>`1. DDL (DATA DEFINITION LANGUAGE);`</span>
+<span>🧷</span> <span>1. DDL (DATA DEFINITION LANGUAGE)</span>
 
-<span>🧷</span> <span>`2. DML (DATA MANIPULATION LANGUAGE);`</span>
+<span>🧷</span> <span>2. DML (DATA MANIPULATION LANGUAGE)</span>
 
-<span>🧷</span> <span>`3. DCL (DATA CONTROL LANGUAGE);`</span>
+<span>🧷</span> <span>3. DCL (DATA CONTROL LANGUAGE)</span>
 
-<span>🧷</span> <span>`4. TCL (TRANSACTION CONTROL LANGUAGE);`</span>
+<span>🧷</span> <span>4. TCL (TRANSACTION CONTROL LANGUAGE)</span>
 
-<span>🧷</span> <span>`5. DQL (DATA QUERY LANGUAGE);`</span>
+<span>🧷</span> <span>5. DQL (DATA QUERY LANGUAGE)</span>
 
 <h2 align="center">Definitions</h2>
 
@@ -63,56 +63,56 @@
 <h4 align="center">LISTAR TODOS OS BANCOS DE DADOS PRESENTES</h4>
 
 ```sql
-  /list
+/list
 ```
 
 ```sql
-  /l
+/l
 ```
 
 <h4 align="center">ACESSAR UM BANCO DE DADOS</h4>
 
 ```sql
-  \c <nome_do_banco>
+\c <nome_do_banco>
 ```
 
 <h4 align="center">SAIR DO SERVIDOR</h4>
 
 ```sql
-  \q
+\q
 ```
 <h4 align="center">MOSTRA AJUDA SOBRE TODOS OS COMANDOS</h4>
 
 ```sql
-  \h
+\h
 ```
 
 ```sql
-  \h <command>
+\h <command>
 ```
 
 <h4 align="center">AJUDA GERAL DOS COMANDOS DO PSQL</h4>
 
 ```sql
-  \?
+\?
 ```
 
 <h4 align="center">MOSTRAR VERSÃO ATUAL DO POSTGRES</h4>
 
 ```sql
-  SELECT version();
+SELECT version();
 ```
 
 <h4 align="center">DESCREVER UMA TABELA</h4>
 
 ```sql
-  \d <schema>.<table>;
+\d <schema>.<table>;
 ```
 
 <h4 align="center">SELECIONAR TODAS AS CONEXÕES ATIVAS</h4>
 
 ```sql
-  SELECT * FROM pg_stat_activity;
+SELECT * FROM pg_stat_activity;
 ```
 
 <h4 align="center">FINALIZAR UM PROCESSO PELO PID</h4>
@@ -122,20 +122,20 @@ SELECT pg_terminate_backend(<NUMERO_DO_PROCESSO>);
 ```
 
 ```sql
-  SELECT pg_terminate_backend(PID) FROM pg_stat_activity WHERE username = "some-role";
+SELECT pg_terminate_backend(PID) FROM pg_stat_activity WHERE username = "some-role";
 ```
 
 <h2 align="center">CTE</h2>
 
 <h3 align="center">Table creation</h3>
 
-```
-  CREATE TABLE tree (
-    id serial PRIMARY KEY,
-    parent_id INT NOT NULL,
-    child_id INT NOT NULL,
-    created_At TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
-  );
+```sql
+CREATE TABLE tree (
+  id serial PRIMARY KEY,
+  parent_id INT NOT NULL,
+  child_id INT NOT NULL,
+  created_At TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
 ```
@@ -159,101 +159,101 @@ SELECT pg_terminate_backend(<NUMERO_DO_PROCESSO>);
 ```
 
 ```sql
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (1,  2, now());
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (2,  4, now());
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (2,  5, now());
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (3,  6, now());
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (6,  7, now());
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (6,  8, now());
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (6,  9, now());
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (1, 10, now());
-  INSERT INTO tree (parent_id, child_id, created_at) VALUES (4, 11, now());
+INSERT INTO tree (parent_id, child_id, created_at) VALUES (1,  2, now());
+INSERT INTO tree (parent_id, child_id, created_at) VALUES (2,  4, now());
+INSERT INTO tree (parent_id, child_id, created_at) VALUES (2,  5, now());
+INSERT INTO tree (parent_id, child_id, created_at) VALUES (3,  6, now());
+INSERT INTO tree (parent_id, child_id, created_at) VALUES (6,  7, now());
+INSERT INTO tree (parent_id, child_id, created_at) VALUES (6,  8, now());
+INSERT INTO tree (parent_id, child_id, created_at) VALUES (6,  9, now());
+INSERT INTO tree (parent_id, child_id, created_at) VALUES (1, 10, now());
+INSERT INTO tree (parent_id, child_id, created_at) VALUES (4, 11, now());
 ```
 
 ```sql
-  WITH RECURSIVE like_tree AS (
-  SELECT
-      id,
-      child_id,
-      parent_id
-  FROM
-      tree
-  WHERE
-      ( parent_id = 4 OR parent_id IN ( SELECT parent_id FROM tree WHERE child_id = 4 ) ) -- TENTAR ARRUMAR AQUI, RETORNANDO TODOS OS PARENTS
-  UNION
-      SELECT
-        t.id,
-        t.child_id,
-        t.parent_id
-      FROM
-        tree t
-      INNER JOIN like_tree lt ON lt.child_id = t.parent_id
-  ) SELECT
-      *
+WITH RECURSIVE like_tree AS (
+SELECT
+    id,
+    child_id,
+    parent_id
+FROM
+    tree
+WHERE
+    ( parent_id = 4 OR parent_id IN ( SELECT parent_id FROM tree WHERE child_id = 4 ) ) -- TENTAR ARRUMAR AQUI, RETORNANDO TODOS OS PARENTS
+UNION
+    SELECT
+      t.id,
+      t.child_id,
+      t.parent_id
     FROM
-      like_tree;
+      tree t
+    INNER JOIN like_tree lt ON lt.child_id = t.parent_id
+) SELECT
+    *
+  FROM
+    like_tree;
 ```
 
 <h2 align="center">CASE WHEN</h2>
 
 ```sql
-  CREATE TABLE colors (
-    id SERIAL PRIMARY KEY,
-    color VARCHAR(32) NOT NULL,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
-  );
+CREATE TABLE colors (
+  id SERIAL PRIMARY KEY,
+  color VARCHAR(32) NOT NULL,
+  created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
 ```sql
-  INSERT INTO colors (color) VALUES ('red');
-  INSERT INTO colors (color) VALUES ('green');
-  INSERT INTO colors (color) VALUES ('orange');
-  INSERT INTO colors (color) VALUES ('blue');
-  INSERT INTO colors (color) VALUES ('gray');
-  INSERT INTO colors (color) VALUES ('yellow');
-  INSERT INTO colors (color) VALUES ('white');
-  INSERT INTO colors (color) VALUES ('pink');
+INSERT INTO colors (color) VALUES ('red');
+INSERT INTO colors (color) VALUES ('green');
+INSERT INTO colors (color) VALUES ('orange');
+INSERT INTO colors (color) VALUES ('blue');
+INSERT INTO colors (color) VALUES ('gray');
+INSERT INTO colors (color) VALUES ('yellow');
+INSERT INTO colors (color) VALUES ('white');
+INSERT INTO colors (color) VALUES ('pink');
 ```
 
 ```sql
-  SELECT colors.* FROM public.colors;
+SELECT colors.* FROM public.colors;
 ```
 
 ```sql
-  SELECT
-    colors.color,
-    colors.id,
-    CASE
-      WHEN (colors.id > 0 AND colors.id < 4) THEN 'greater than 0 and less than 4'
-      WHEN (colors.id = 4) THEN 'equal 4'
-      WHEN (colors.id > 4) THEN 'greater than 4'
-    END
-  FROM
-    colors;
+SELECT
+  colors.color,
+  colors.id,
+  CASE
+    WHEN (colors.id > 0 AND colors.id < 4) THEN 'greater than 0 and less than 4'
+    WHEN (colors.id = 4) THEN 'equal 4'
+    WHEN (colors.id > 4) THEN 'greater than 4'
+  END
+FROM
+  colors;
 ```
 
 <h2 align="center">DATABASE</h2>
 
 ```sql
-  CREATE DATABASE <nome_do_banco_de_dados>
+CREATE DATABASE <nome_do_banco_de_dados>
 ```
 
 <h4 align="center">CRIAÇÃO DE UM BANCO DE DADOS A PARTIR DE UM TEMPLATE</h4>
 
 ```sql
-  CREATE DATABASE <nome_do_banco> TEMPLATE <nome_do_banco_template>
+CREATE DATABASE <nome_do_banco> TEMPLATE <nome_do_banco_template>
 ```
 
 <h4 align="center">BANCO TEMPLATE - PROTEGER O BANCO DE DADOS CONTRA ALTERAÇÕES</h4>
 
 ```sql
-  UPDATE pg_database SET datistemplate = TRUE WHERE datname = <nome_do_banco>
+UPDATE pg_database SET datistemplate = TRUE WHERE datname = <nome_do_banco>
 ```
 
 <h4 align="center">SELECIONAR O BANCO DE DADOS EM QUE ESTAMOS LOGADO</h4>
 
 ```sql
-  SELECT current_database();
+SELECT current_database();
 ```
 
 <h2 align="center">TABLES</h2>
@@ -263,12 +263,12 @@ SELECT pg_terminate_backend(<NUMERO_DO_PROCESSO>);
 <a href="https://www.postgresql.org/docs/current/sql-createtable.html">CREATE TABLE</a>
 
 ```sql
-  CREATE TABLE logs (
-    id SERIAL PRIMARY KEY,
-    user VARCHAR (64),
-    description text,
-    log_ts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
-  );
+CREATE TABLE logs (
+  id SERIAL PRIMARY KEY,
+  user VARCHAR (64),
+  description text,
+  log_ts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
 ```sql
@@ -293,21 +293,21 @@ SELECT pg_terminate_backend(<NUMERO_DO_PROCESSO>);
 ```
 
 ```sql
-  INSERT INTO account (username, password, email, description) VALUES ('johndoe', 'secret', 'johndoe@gmail.com', 'example');
+INSERT INTO account (username, password, email, description) VALUES ('johndoe', 'secret', 'johndoe@gmail.com', 'example');
 ```
 
 ```sql
-  SELECT * FROM public.account;
+SELECT * FROM public.account;
 ```
 
 <h3 align="center">TABELA-HERANÇA</h3>
 
 ```sql
-  CREATE TABLE logs_2017 (PRIMARY KEY(log_id)) INHERITS (logs0);
+CREATE TABLE logs_2017 (PRIMARY KEY(log_id)) INHERITS (logs0);
 ```
 
 ```sql
-  ALTER TABLE logs_2017 ADD CONSTRAINT chk_y2016 CHECK (log_ts >= '2011-1-1'::timestamptz AND log_ts < '2016-1-1'::timestamptz );
+ALTER TABLE logs_2017 ADD CONSTRAINT chk_y2016 CHECK (log_ts >= '2011-1-1'::timestamptz AND log_ts < '2016-1-1'::timestamptz );
 ```
 
 <a href="https://www.postgresql.org/docs/current/tutorial-inheritance.html">3.6. Inheritance</a>
@@ -317,66 +317,66 @@ SELECT pg_terminate_backend(<NUMERO_DO_PROCESSO>);
 <a href="http://web.archive.org/web/20170724234315/https://www.compose.com/articles/faster-performance-with-unlogged-tables-in-postgresql">Faster Performance with Unlogged Tables in PostgreSQL</a>
 
 ```sql
-  CREATE UNLOGGED TABLE sessoes_web (id_sessão text PRIMARY KEY, add_ts timestamptz, upd_ts timestamptz, estado_sessão xml);
+CREATE UNLOGGED TABLE sessoes_web (id_sessão text PRIMARY KEY, add_ts timestamptz, upd_ts timestamptz, estado_sessão xml);
 ```
 
 <h3 align="center">TABELA-TYPEOF</h3>
 
 ```sql
-  CREATE TYPE user_básico AS (user varchar(50), pwd varchar(10));
+CREATE TYPE user_básico AS (user varchar(50), pwd varchar(10));
 ```
 
 ```sql
-  CREATE TABLE super_user OF user_básico (CONSTRAINT pk_su PRIMARY KEY (user));
+CREATE TABLE super_user OF user_básico (CONSTRAINT pk_su PRIMARY KEY (user));
 ```
 
 ```sql
-  ALTER TYPE user_básico ADD ATTRIBUTE telefone varchar(10) CASCADE;
+ALTER TYPE user_básico ADD ATTRIBUTE telefone varchar(10) CASCADE;
 ```
 
 <h3 align="center">TABELA-GENERATED-ALWAYS</h3>
 
 ```sql
-  CREATE TABLE testing (
-    id SERIAL PRIMARY KEY,
-    meter INTEGER NOT NULL,
-    km NUMERIC (8, 3) GENERATED ALWAYS AS (meter::INTEGER / 1000::NUMERIC(8, 3)) STORED NOT NULL
-  );
+CREATE TABLE testing (
+  id SERIAL PRIMARY KEY,
+  meter INTEGER NOT NULL,
+  km NUMERIC (8, 3) GENERATED ALWAYS AS (meter::INTEGER / 1000::NUMERIC(8, 3)) STORED NOT NULL
+);
 ```
 
 ```sql
-  INSERT INTO testing (km) VALUES (10);
+INSERT INTO testing (km) VALUES (10);
 ```
 <h3 align="center">ARRAY</h3>
 
 ```sql
-  SELECT ARRAY[2001, 2002, 2003] AS yrs;
+SELECT ARRAY[2001, 2002, 2003] AS yrs;
 ```
 
 ```sql
-  SELECT '{Alex, Sonia}'::text[] AS name, '{46, 43}'::smallint[] AS age;
+SELECT '{Alex, Sonia}'::text[] AS name, '{46, 43}'::smallint[] AS age;
 ```
 
 ```sql
-  SELECT string_to_array('CA.MA.TX', '.') AS states;
+SELECT string_to_array('CA.MA.TX', '.') AS states;
 ```
 
 ```sql
-  SELECT array_agg(f.t) FROM ( VALUES('{Alex, Sônia}'::text[]), ('{46, 43}'::text[]) ) AS f(t);
+SELECT array_agg(f.t) FROM ( VALUES('{Alex, Sônia}'::text[]), ('{46, 43}'::text[]) ) AS f(t);
 ```
 
 ```sql
-  SELECT unnest('{XX0, X0X, 0XX}'::text[]) as tic_tac_toe;
+SELECT unnest('{XX0, X0X, 0XX}'::text[]) as tic_tac_toe;
 ```
 
 <h3 align="center">RANGE</h3>
 
 ```sql
-  SELECT '[2020-01-05, 2020-01-09]'::daterange;
+SELECT '[2020-01-05, 2020-01-09]'::daterange;
 ```
 
 ```sql
-  SELECT '(2020-01-05, 2020-01-09]'::daterange;
+SELECT '(2020-01-05, 2020-01-09]'::daterange;
 ```
 
 <h2 align="center">INDEX</h2>
@@ -403,53 +403,53 @@ SELECT pg_terminate_backend(<NUMERO_DO_PROCESSO>);
 ```
 
 ```sql
-  INSERT INTO public.user (username, name, email) VALUES ('WesleyFloresAccount', 'Wesley Vinicius Flôres Terres', 'wesleyfloresterres@gmail.com');
+INSERT INTO public.user (username, name, email) VALUES ('WesleyFloresAccount', 'Wesley Vinicius Flôres Terres', 'wesleyfloresterres@gmail.com');
 ```
 
 <h5 align="center">INDEX-B TREE</h5>
 
 ```sql
-  CREATE [ UNIQUE ] INDEX [ CONCURRENTLY ] [ INDEX-NAME ] ON <SCHEMA-NAME>.<NOME-TABELA>(NOME-COLUNA)
+CREATE [ UNIQUE ] INDEX [ CONCURRENTLY ] [ INDEX-NAME ] ON <SCHEMA-NAME>.<NOME-TABELA>(NOME-COLUNA)
 ```
 
 <h5 align="center">INDEX-HASH</h5>
 
 ```sql
-  CREATE [ UNIQUE ] INDEX [ CONCURRENTLY ] [ INDEX-NAME ] ON <SCHEMA-NAME>.<NOME-TABELA> USING HASH(<NOME-COLUNA>);
+CREATE [ UNIQUE ] INDEX [ CONCURRENTLY ] [ INDEX-NAME ] ON <SCHEMA-NAME>.<NOME-TABELA> USING HASH(<NOME-COLUNA>);
 ```
 
 <h5 align="center">INDEX-CONCURRENTLY</h5>
 
 ```sql
-  CREATE INDEX CONCURRENTLY [ INDEX-NAME ] ON <SCHEMA-NAME>.<NOME-TABELA> USING btree(<NOME-COLUNA>);
+CREATE INDEX CONCURRENTLY [ INDEX-NAME ] ON <SCHEMA-NAME>.<NOME-TABELA> USING btree(<NOME-COLUNA>);
 ```
 
 ```sql
-  DROP INDEX [ CONCURRENTLY ][ IF EXISTS ] [ SCHEMA-NAME.INDEX-NAME ] [ CASCADE | RESTRICT ];
+DROP INDEX [ CONCURRENTLY ][ IF EXISTS ] [ SCHEMA-NAME.INDEX-NAME ] [ CASCADE | RESTRICT ];
 ```
 
 <h5 align="center">INDEX-PARTIAL</h5>
 
 ```sql
-  CREATE INDEX CONCURRENTLY user_name_idx ON public.user USING btree (name) WHERE last_login >= '2020-03-04';
+CREATE INDEX CONCURRENTLY user_name_idx ON public.user USING btree (name) WHERE last_login >= '2020-03-04';
 ```
 
 <h5 align="center">INDEX-BLOAT</h5>
 
 ```sql
-  VACUUM public.account;
+VACUUM public.account;
 ```
 
 ```sql
-  VACUUM FULL public.account;
+VACUUM FULL public.account;
 ```
 
 ```sql
-  CLUSTER public.account USING account_pkey;
+CLUSTER public.account USING account_pkey;
 ```
 
 ```sql
-  REINDEX TABLE account;
+REINDEX TABLE account;
 ```
 
 <h2 align="center">FUZZY-SEARCH</h2>
@@ -457,75 +457,75 @@ SELECT pg_terminate_backend(<NUMERO_DO_PROCESSO>);
 <a href="https://en.wikipedia.org/wiki/Approximate_string_matching">Approximate string matching</a>
 
 ```sql
-  CREATE EXTENSION pg_trgm;
+CREATE EXTENSION pg_trgm;
 ```
 
 ```sql
-  CREATE TABLE t_location (name TEXT);
+CREATE TABLE t_location (name TEXT);
 ```
 
 ```sql
-  COPY t_location FROM PROGRAM 'curl https://web.archive.org/web/20200323144512/https://cybertec-postgresql.com/secret/orte.txt';
+COPY t_location FROM PROGRAM 'curl https://web.archive.org/web/20200323144512/https://cybertec-postgresql.com/secret/orte.txt';
 ```
 
 <h4 align="center">QUANTO MAIS PRÓXIMO DE ZERO, MAIOR A PROXIMIDADE DAS STRINGS (ZERO SIGNIFICA QUE SÃO IGUAIS)</h4>
 
 ```sql
-  SELECT 'abcde' <-> 'abdeacb';
+SELECT 'abcde' <-> 'abdeacb';
 ```
 
 ```sql
-  SELECT show_trgm('abcdef');
+SELECT show_trgm('abcdef');
 ```
 
 ```sql
-  CREATE INDEX idx_trgm ON t_location USING GiST (name GiST_trgm_ops);
+CREATE INDEX idx_trgm ON t_location USING GiST (name GiST_trgm_ops);
 ```
 
 ```sql
-  EXPLAIN SELECT t_location.name FROM t_location ORDER BY NAME <-> 'Kramertneusiedel' LIMIT 6;
+EXPLAIN SELECT t_location.name FROM t_location ORDER BY NAME <-> 'Kramertneusiedel' LIMIT 6;
 ```
 
 ```sql
-  SELECT * FROM t_location WHERE name ~ '^[H-J]orn$' LIMIT 5;
+SELECT * FROM t_location WHERE name ~ '^[H-J]orn$' LIMIT 5;
 ```
 
 ```sql
-  SELECT * FROM t_location WHERE name ~ '[A-C].*neu.*';
+SELECT * FROM t_location WHERE name ~ '[A-C].*neu.*';
 ```
 
 <h2 align="center">Other Topics</h2>
 
 ```sql
-  CREATE TABLE t_oil (
-    id SERIAL PRIMARY KEY,
-    region VARCHAR(32),
-    country VARCHAR(32),
-    year INT,
-    production INT,
-    consumption INT
-  );
+CREATE TABLE t_oil (
+  id SERIAL PRIMARY KEY,
+  region VARCHAR(32),
+  country VARCHAR(32),
+  year INT,
+  production INT,
+  consumption INT
+);
 ```
 
 ```sql
-  COPY t_oil (region, country, year, production, consumption) FROM PROGRAM 'curl https://www.cybertec-postgresql.com/secret/oil_ext.txt';
+COPY t_oil (region, country, year, production, consumption) FROM PROGRAM 'curl https://www.cybertec-postgresql.com/secret/oil_ext.txt';
 ```
 
 ```sql
-  SELECT region, avg(production) FROM t_oil GROUP BY region;
+SELECT region, avg(production) FROM t_oil GROUP BY region;
 ```
 
 ```sql
-  SELECT region, avg(production) FROM t_oil GROUP BY ROLLUP (region);
+SELECT region, avg(production) FROM t_oil GROUP BY ROLLUP (region);
 ```
 
 ```sql
-  SELECT 
-    region,
-    avg(production),
-    avg(production) FILTER (WHERE year < 1990) AS old,
-    avg(production) FILTER (WHERE year >= 1990) AS new
-  FROM
-    t_oil
-  GROUP BY region;
+SELECT 
+  region,
+  avg(production),
+  avg(production) FILTER (WHERE year < 1990) AS old,
+  avg(production) FILTER (WHERE year >= 1990) AS new
+FROM
+  t_oil
+GROUP BY region;
 ```
